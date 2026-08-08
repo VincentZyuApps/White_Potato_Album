@@ -1,1 +1,2 @@
-*.md linguist-detectable=true
+# Include documentation in GitHub Linguist language statistics.
+*.md linguist-language=Markdown linguist-detectable=true

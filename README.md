@@ -16,7 +16,7 @@ https://pan.baidu.com/s/1a-wWZOzsgAQ2FFJJcPvpKQ?pwd=wtpt
 
 --- 
 
-![White_Potato_Album](https://socialify.git.ci/VincentZyu233/White_Potato_Album/image?description=1&font=Inter&forks=1&issues=1&language=1&logo=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F9%2F92%2FManim_icon.svg%3Futm_source%3Dcommons.wikimedia.org%26utm_campaign%3Dindex%26utm_content%3Doriginal+&name=1&owner=1&pattern=Solid&pulls=1&stargazers=1&theme=Light)
+![White_Potato_Album](https://socialify.git.ci/VincentZyu233/White_Potato_Album/image?custom_language=Python&description=1&font=Inter&forks=1&issues=1&language=1&logo=https%3A%2F%2Fthumb.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F92%2FManim_icon.svg%2F960px-Manim_icon.svg.png%3Futm_source%3Dcommons.wikimedia.org%26utm_campaign%3Dindex%26utm_content%3Dthumbnail%26_%3D20210518063037&name=1&owner=1&pattern=Solid&pulls=1&stargazers=1&theme=Light)
 
 ## 生成视频
 ```bash

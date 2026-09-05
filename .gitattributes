@@ -1,2 +1,5 @@
-# Include documentation in GitHub Linguist language statistics.
+# 📚 将文档纳入 GitHub Linguist 语言统计。
 *.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
+
+# ⚙️ 将此配置文件纳入 GitHub Linguist 语言统计。
+.gitattributes linguist-detectable=true

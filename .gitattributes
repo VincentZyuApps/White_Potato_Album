@@ -2,4 +2,4 @@
 *.md linguist-language=Markdown linguist-detectable=true linguist-documentation=false
 
 # ⚙️ 将此配置文件纳入 GitHub Linguist 语言统计。
-.gitattributes linguist-detectable=true
+.gitattributes linguist-language=gitattributes linguist-detectable=true linguist-documentation=false

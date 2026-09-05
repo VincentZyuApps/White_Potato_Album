@@ -1,16 +1,16 @@
 ![potato_bili_cover.png](potato_bili_cover.png)
 
-# White_Potato_Album
+# 🥔 White_Potato_Album
 这里是B站UP主 WHITE POTATO（歪特破特抖）作品精选集  
 *01bit的数据承载精神的永恒；白色土豆将在赛博梦境中生根发芽。*
 
-# B站链接
+# 📺 B站链接
 https://www.bilibili.com/video/BV1j34y1P75b
 
-# 阿里云网盘链接
+# ☁️ 阿里云网盘链接
 https://www.aliyundrive.com/s/Drjre6JSVVb
 
-# 百度云盘链接
+# 💾 百度云盘链接
 https://pan.baidu.com/s/1a-wWZOzsgAQ2FFJJcPvpKQ?pwd=wtpt
 
 
@@ -18,7 +18,7 @@ https://pan.baidu.com/s/1a-wWZOzsgAQ2FFJJcPvpKQ?pwd=wtpt
 
 ![White_Potato_Album](https://socialify.git.ci/VincentZyu233/White_Potato_Album/image?custom_language=Python&description=1&font=Inter&forks=1&issues=1&language=1&logo=https%3A%2F%2Fthumb.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F92%2FManim_icon.svg%2F960px-Manim_icon.svg.png%3Futm_source%3Dcommons.wikimedia.org%26utm_campaign%3Dindex%26utm_content%3Dthumbnail%26_%3D20210518063037&name=1&owner=1&pattern=Solid&pulls=1&stargazers=1&theme=Light)
 
-## 生成视频
+## 🎬 生成视频
 ```bash
 git clone https://github.com/VincentZyu233/White_Potato_Album
 # uv is recommended
@@ -47,9 +47,9 @@ scoop install ffmpeg
 sudo apt install ffmpeg
 # on MacOS:
 brew install ffmpeg
-# 视频转gif
+# Convert the video to a GIF
 ffmpeg -i Potato_Bili_Cover_Intro.mp4 -vf "fps=30,scale=800:-1:flags=lanczos" -loop 0 Potato_Bili_Cover_Intro.gif
-# 倒放拼接，循环
+# Reverse and concatenate for a loop
 ffmpeg -i Potato_Bili_Cover_Intro.gif -filter_complex "[0:v]reverse[r];[0:v][r]concat=n=2:v=1:a=0" Potato_Bili_Cover_Final_Loop.gif
 
 ```

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import portrait from '../../../potato_pfp.jpg'
+import FooterAnimation from './FooterAnimation.vue'
 </script>
 
 <template>
   <footer id="footer">
+    <FooterAnimation />
     <div class="footer-mark"><img :src="portrait" alt="白土豆" width="72" height="72" loading="lazy" /></div>
     <nav class="footer-links">
       <a href="https://www.bilibili.com/video/BV1j34y1P75b" target="_blank" rel="noopener">哔哩哔哩</a>

@@ -94,6 +94,8 @@ const emit = defineEmits<{ (e: 'play'): void }>()
 }
 .archive-meta span + span { color: var(--muted); }
 .archive-id { font-weight: 600; }
+.card:not(.featured) .meta { min-height: 80px; padding: 9px 15px 10px; gap: 5px; }
+.card:not(.featured) .title { line-height: 1.35; }
 .featured { display: grid; grid-template-columns: 3fr 2fr; align-items: center; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding-bottom: 28px; }
 .featured.reverse { grid-template-columns: 2fr 3fr; }
 .featured.reverse .thumb { grid-column: 2; grid-row: 1; }
@@ -110,5 +112,6 @@ const emit = defineEmits<{ (e: 'play'): void }>()
   .meta { min-height: 92px; padding: 10px 11px 12px; }
   .meta .title { font-size: 0.94rem; }
   .play { width: 48px; height: 48px; }
+  .card:not(.featured) .meta { min-height: 74px; padding: 8px 11px; }
 }
 </style>

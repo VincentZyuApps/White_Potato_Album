@@ -23,8 +23,10 @@ export function useAnchorScroll() {
     cancel()
     return new Promise(resolve => {
     const start = window.scrollY
-    const destination = Math.max(0, Math.min(start + target.getBoundingClientRect().top,
-      document.documentElement.scrollHeight - window.innerHeight))
+    const navOffset = (document.querySelector('.site-nav')?.getBoundingClientRect().height ?? 0) + 12
+    const bottom = document.documentElement.scrollHeight - window.innerHeight
+    const destination = target.id === 'footer' ? Math.max(0, bottom) : Math.max(0, Math.min(
+      start + target.getBoundingClientRect().top - navOffset, bottom))
     if (isSnap() || prefersReducedMotion()) {
       window.scrollTo({ top: destination, behavior: 'instant' })
       resolve(true)

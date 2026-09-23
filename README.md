@@ -1,4 +1,4 @@
-[![GitHub Pages · 在线浏览](https://img.shields.io/badge/GitHub_Pages-在线浏览作品集-496544?style=for-the-badge&logo=github&logoColor=white)](https://vincentzyuapps.github.io/White_Potato_Album/)
+[![GitHub Pages · 在线浏览](https://img.shields.io/badge/GitHub_Pages-在线浏览作品集-A38A7C?style=for-the-badge&logo=github&logoColor=white&labelColor=242523)](https://vincentzyuapps.github.io/White_Potato_Album/)
 
 [🌐 查看网页项目说明与效果演示](web/README.md)
 

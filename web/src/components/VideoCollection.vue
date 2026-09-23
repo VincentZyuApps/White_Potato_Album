@@ -25,8 +25,8 @@ useScrollScene(root, () => {
 </template>
 <style scoped>
 .featured-list { display: grid; gap: clamp(28px, 5vw, 64px); }
-.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(16px, 2.4vw, 28px); row-gap: 14px; }
 .card-entry { min-width: 0; }
-@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } }
+@media (max-width: 800px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; } }
 @media (max-width: 440px) { .grid { grid-template-columns: 1fr; } }
 </style>

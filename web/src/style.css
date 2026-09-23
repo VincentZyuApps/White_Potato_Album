@@ -1,0 +1,67 @@
+/* ===== 全局 tokens + 基础样式 ===== */
+:root {
+  --paper: #ffffff;
+  --ink: #191818;
+  --ink-soft: #4a4744;
+  --muted: #8d8880;
+  --line: #e7e3dd;
+  --brown: #a9784f;
+  --brown-deep: #8a5f3c;
+  --green: #3f8f4a;
+  --green-deep: #2f6f39;
+  --shadow: 0 10px 30px rgba(60, 45, 30, 0.10);
+  --shadow-hover: 0 18px 44px rgba(60, 45, 30, 0.18);
+
+  --serif: "Tinos", "Times New Roman", Times, serif;
+  --sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+
+  --maxw: 1200px;
+
+  /* 滚动主题进度（0→1，由 ScrollTrigger 驱动）：白 → 微暖发芽色 */
+  --sprout: 0;
+  --page-bg: #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; max-width: 100%; overflow-x: hidden; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--page-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; }
+#app { position: relative; z-index: 1; }
+
+/* 复用视频里的 “—— 标题 ——” 字幕样式 */
+.section-head {
+  text-align: center;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  margin: 0;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9em;
+}
+.section-head::before,
+.section-head::after {
+  content: "";
+  width: clamp(28px, 8vw, 70px);
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ?snap：关闭平滑滚动，保证锚点跳转 / 截图确定性 */
+html.snap { scroll-behavior: auto; }

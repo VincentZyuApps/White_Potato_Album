@@ -49,6 +49,12 @@ function openAt(which: 'featured' | 'more', index: number) { group.value = which
 function close() { current.value = -1 }
 function prev() { current.value = (current.value - 1 + playlist.value.length) % playlist.value.length }
 function next() { current.value = (current.value + 1) % playlist.value.length }
+function browseMore() {
+  if (collapsing.value || animating.value) return
+  if (!expanded.value) expanded.value = true
+  else if (morePanel.value) void scrollToElement(morePanel.value)
+}
+defineExpose({ browseMore })
 async function toggleMore() {
   if (collapsing.value || animating.value) return
   if (expanded.value && toggleButton.value && toggleButton.value.getBoundingClientRect().top < 0) {

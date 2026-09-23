@@ -9,21 +9,25 @@ export function useAnchorScroll() {
     const target = document.getElementById(link.hash.slice(1))
     if (!target) return
     event.preventDefault()
-    cancel()
-    const start = window.scrollY
-    const destination = Math.max(0, Math.min(start + target.getBoundingClientRect().top,
-      document.documentElement.scrollHeight - window.innerHeight))
-    const finish = () => {
+    void scrollToElement(target).then(completed => {
+      if (!completed) return
       if (location.hash !== link.hash) history.pushState(null, '', link.hash)
       const previousTabIndex = target.getAttribute('tabindex')
       target.setAttribute('tabindex', '-1')
       target.focus({ preventScroll: true })
       if (previousTabIndex === null) target.removeAttribute('tabindex')
       else target.setAttribute('tabindex', previousTabIndex)
-    }
+    })
+  }
+  function scrollToElement(target: HTMLElement): Promise<boolean> {
+    cancel()
+    return new Promise(resolve => {
+    const start = window.scrollY
+    const destination = Math.max(0, Math.min(start + target.getBoundingClientRect().top,
+      document.documentElement.scrollHeight - window.innerHeight))
     if (isSnap() || prefersReducedMotion()) {
       window.scrollTo({ top: destination, behavior: 'instant' })
-      finish()
+      resolve(true)
       return
     }
     let frame = 0
@@ -33,6 +37,7 @@ export function useAnchorScroll() {
       if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Escape', 'Tab'].includes(e.key)) cancel()
     }
     cancel = () => {
+      resolve(false)
       cancelAnimationFrame(frame)
       window.removeEventListener('wheel', cancel)
       window.removeEventListener('touchstart', cancel)
@@ -52,10 +57,11 @@ export function useAnchorScroll() {
       const eased = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
       window.scrollTo({ top: start + (destination - start) * eased, behavior: 'instant' })
       if (t < 1) frame = requestAnimationFrame(tick)
-      else { cancel(); finish() }
+      else { resolve(true); cancel() }
     }
     frame = requestAnimationFrame(tick)
+    })
   }
   onUnmounted(() => cancel())
-  return { scrollToAnchor }
+  return { scrollToAnchor, scrollToElement }
 }

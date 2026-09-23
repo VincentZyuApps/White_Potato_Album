@@ -4,10 +4,6 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - "web/**"
-      - "potato_pfp.jpg"
-      - ".github/workflows/pages.yml"
   workflow_dispatch: {}
 
 permissions:
@@ -15,13 +11,27 @@ permissions:
   pages: write
   id-token: write
 
-# 同一时刻只跑一个部署，新推送会取代进行中的旧部署
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.check.outputs.deploy }}
+    steps:
+      - uses: actions/github-script@v7
+        id: check
+        with:
+          script: |
+            const allowed = context.ref === 'refs/heads/main' && (
+              context.eventName === 'workflow_dispatch' ||
+              /\[update-?page\]/i.test(context.payload.head_commit?.message ?? '')
+            );
+            core.setOutput('deploy', String(allowed));
   deploy:
+    needs: gate
+    if: needs.gate.outputs.deploy == 'true'
+    concurrency:
+      group: pages
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     environment:
       name: github-pages

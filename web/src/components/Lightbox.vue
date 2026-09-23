@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onUnmounted } from 'vue'
 import type { Video } from '../data/videos'
-import { fmtDuration } from '../data/videos'
+import { fmtDuration, archiveLabel } from '../data/videos'
 const props = defineProps<{ open: boolean; video: Video | null }>()
 const emit = defineEmits<{ close: []; prev: []; next: [] }>()
 const dialog = ref<HTMLDialogElement | null>(null)
@@ -64,7 +64,7 @@ onUnmounted(() => { videoEl.value?.pause(); dialog.value?.close(); unlock() })
           <button type="button" aria-label="上一个视频" @click="emit('prev')">← 上一个</button>
           <p aria-live="polite">
             <span class="player-title">{{ video?.title }}</span>
-            <span v-if="video" class="player-archive"> · {{ video.id.toUpperCase() }} · {{ fmtDuration(video.duration) }}</span>
+            <span v-if="video" class="player-archive"> · {{ archiveLabel(video) }} · {{ fmtDuration(video.duration) }}</span>
           </p>
           <button type="button" aria-label="下一个视频" @click="emit('next')">下一个 →</button>
         </footer>

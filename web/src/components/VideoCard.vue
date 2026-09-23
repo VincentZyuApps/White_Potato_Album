@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { Video } from '../data/videos'
-import { fmtDuration } from '../data/videos'
+import { fmtDuration, archiveLabel } from '../data/videos'
 
-defineProps<{ video: Video }>()
+defineProps<{ video: Video; featured?: boolean; reverse?: boolean }>()
 const emit = defineEmits<{ (e: 'play'): void }>()
 </script>
 
 <template>
-  <button class="card" type="button" :aria-label="`播放 ${video.title}，${video.id.toUpperCase()}`" @click="emit('play')">
+  <button class="card" :class="{ featured, reverse }" type="button" :aria-label="`播放 ${video.title}，${archiveLabel(video)}`" @click="emit('play')">
     <div class="thumb">
       <img :src="video.cover" :alt="`${video.title} 封面`" loading="lazy" decoding="async" />
       <span class="play" aria-hidden="true">
@@ -17,7 +17,7 @@ const emit = defineEmits<{ (e: 'play'): void }>()
     <div class="meta">
       <span class="title">{{ video.title }}</span>
       <span class="archive-meta">
-        <span class="archive-id">{{ video.id.toUpperCase() }}</span>
+        <span class="archive-id">{{ archiveLabel(video) }}</span>
         <span v-if="fmtDuration(video.duration)">{{ fmtDuration(video.duration) }}</span>
       </span>
     </div>
@@ -94,6 +94,18 @@ const emit = defineEmits<{ (e: 'play'): void }>()
 }
 .archive-meta span + span { color: var(--muted); }
 .archive-id { font-weight: 600; }
+.featured { display: grid; grid-template-columns: 3fr 2fr; align-items: center; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding-bottom: 28px; }
+.featured.reverse { grid-template-columns: 2fr 3fr; }
+.featured.reverse .thumb { grid-column: 2; grid-row: 1; }
+.featured.reverse .meta { grid-column: 1; grid-row: 1; }
+.featured .meta { min-width: 0; min-height: 0; padding: clamp(20px, 4vw, 48px); gap: 24px; }
+.featured .meta .title { display: block; overflow: visible; font-size: clamp(22px, 2.5vw, 34px); line-height: 1.6; overflow-wrap: anywhere; }
+.featured .archive-meta { flex-wrap: wrap; font-size: .85rem; }
+@media (max-width: 800px) {
+  .featured, .featured.reverse { display: flex; flex-direction: column; align-items: stretch; }
+  .featured .meta { padding: 20px 4px 8px; gap: 14px; }
+  .featured .meta .title { font-size: 24px; }
+}
 @media (max-width: 560px) {
   .meta { min-height: 92px; padding: 10px 11px 12px; }
   .meta .title { font-size: 0.94rem; }

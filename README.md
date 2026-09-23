@@ -1,3 +1,5 @@
+[![GitHub Pages · 在线浏览](https://img.shields.io/badge/GitHub_Pages-在线浏览作品集-496544?style=for-the-badge&logo=github&logoColor=white)](https://vincentzyuapps.github.io/White_Potato_Album/)
+
 [🌐 查看网页项目说明与效果演示](web/README.md)
 
 ![potato_bili_cover.png](potato_bili_cover.png)

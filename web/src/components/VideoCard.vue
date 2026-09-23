@@ -84,34 +84,34 @@ const emit = defineEmits<{ (e: 'play'): void }>()
   gap: 9px; padding: 14px 15px 15px;
 }
 .meta .title {
-  font-family: var(--display-cn); font-weight: 400; font-style: oblique; font-size: 1.05rem; line-height: 1.45; color: var(--ink);
+  font-family: var(--display-cn); font-weight: 400; font-style: oblique; font-size: 1.25rem; line-height: 1.45; color: var(--ink);
   display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
 }
 .archive-meta {
   display: flex; align-items: baseline; gap: 9px; margin-top: auto;
-  font-family: var(--brand); font-size: 0.74rem; letter-spacing: 0.08em;
+  font-family: var(--serif); font-size: 16px; font-weight: 400; line-height: 20px; letter-spacing: 0.02em;
   color: var(--brown-deep); font-variant-numeric: tabular-nums;
 }
 .archive-meta span + span { color: var(--muted); }
-.archive-id { font-weight: 600; }
-.card:not(.featured) .meta { min-height: 80px; padding: 9px 15px 10px; gap: 5px; }
-.card:not(.featured) .title { line-height: 1.35; }
+.archive-id { font-weight: 400; }
+.card:not(.featured) .meta { min-height: 80px; padding: 3px 15px; gap: 2px; }
+.card:not(.featured) .title { line-height: 1.3; }
 .featured { display: grid; grid-template-columns: 3fr 2fr; align-items: center; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding-bottom: 28px; }
 .featured.reverse { grid-template-columns: 2fr 3fr; }
 .featured.reverse .thumb { grid-column: 2; grid-row: 1; }
 .featured.reverse .meta { grid-column: 1; grid-row: 1; }
-.featured .meta { min-width: 0; min-height: 0; padding: clamp(20px, 4vw, 48px); gap: 24px; }
-.featured .meta .title { display: block; overflow: visible; font-size: clamp(22px, 2.5vw, 34px); line-height: 1.6; overflow-wrap: anywhere; }
-.featured .archive-meta { flex-wrap: wrap; font-size: .85rem; }
+.featured .meta { min-width: 0; min-height: 0; padding: clamp(20px, 4vw, 48px); gap: 18px; }
+.featured .meta .title { display: block; overflow: visible; font-size: clamp(26px, 3vw, 42px); line-height: 1.4; overflow-wrap: anywhere; }
+.featured .archive-meta { flex-wrap: wrap; font-size: 18px; line-height: 22px; }
 @media (max-width: 800px) {
   .featured, .featured.reverse { display: flex; flex-direction: column; align-items: stretch; }
-  .featured .meta { padding: 20px 4px 8px; gap: 14px; }
-  .featured .meta .title { font-size: 24px; }
+  .featured .meta { padding: 20px 4px 8px; gap: 8px; }
+  .featured .meta .title { font-size: 28px; }
 }
 @media (max-width: 560px) {
   .meta { min-height: 92px; padding: 10px 11px 12px; }
-  .meta .title { font-size: 0.94rem; }
+  .meta .title { font-size: 1.125rem; }
   .play { width: 48px; height: 48px; }
-  .card:not(.featured) .meta { min-height: 74px; padding: 8px 11px; }
+  .card:not(.featured) .meta { min-height: 74px; padding: 2px 11px; }
 }
 </style>

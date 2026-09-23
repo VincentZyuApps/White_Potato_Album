@@ -63,8 +63,9 @@
 | 精选清单 | `src/data/videos.json` → Release「精选18个视频」 |
 | 更多作品清单 | `src/data/more-videos.json` → Release `more-videos` |
 | 封面 | `public/assets/covers/` |
-| 中文标题 | 得意黑 Smiley Sans，搭配语义 emoji |
-| 品牌与 AV 编号 | Computer Modern |
+| 中文标题 | 得意黑 Smiley Sans；精选最大 42px、手机 28px，更多作品 20px、手机 18px，播放器 18px；搭配语义 emoji |
+| 品牌 | Computer Modern |
+| AV 编号与时长 | Tinos／思源宋体；精选 18px，更多作品及播放器 16px |
 | 正文与界面 | Tinos、Noto Serif SC、Noto Sans SC |
 
 修改清单时同步 `public/assets/` 下的 JSON 副本。视频存放在 Release，字体随网页自托管；字体授权见各 npm 包。

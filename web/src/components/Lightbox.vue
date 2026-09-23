@@ -88,9 +88,9 @@ video { width: 100%; max-height: 72svh; display: block; background: #000; }
 button { color: inherit; background: transparent; border: 1px solid #ffffff40; padding: 10px 14px; cursor: pointer; border-radius: 3px; white-space: nowrap; }
 button:hover { background: #ffffff15; }
 .player-footer { margin-top: 16px; font-size: 13px; }
-.player-footer p { text-align: center; overflow-wrap: anywhere; }
-.player-title { font-family: var(--display-cn); font-style: oblique; }
-.player-archive { font-family: var(--brand); font-size: .88em; letter-spacing: .06em; color: #d7d7cf; }
+.player-footer p { text-align: center; overflow-wrap: anywhere; margin-block: 6px; }
+.player-title { font-family: var(--display-cn); font-style: oblique; font-size: 18px; line-height: 1.4; }
+.player-archive { font-family: var(--serif); font-size: 16px; font-weight: 400; line-height: 20px; letter-spacing: .02em; color: #d7d7cf; }
 .load-error { text-align: center; font-size: 14px; }
-@media (max-width: 560px) { .lightbox { padding: 12px; } .player-footer { flex-wrap: wrap; } .player-footer p { order: -1; width: 100%; margin: 0 0 8px; } video { max-height: 60svh; } }
+@media (max-width: 560px) { .lightbox { padding: 12px; } .player-footer { flex-wrap: wrap; } .player-footer p { order: -1; width: 100%; margin: 0 0 4px; } video { max-height: 60svh; } }
 </style>

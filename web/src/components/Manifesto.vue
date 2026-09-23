@@ -1,83 +1,33 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { ref } from 'vue'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { prefersReducedMotion, isSnap } from '../composables/useReducedMotion'
-
-gsap.registerPlugin(ScrollTrigger)
-
-const sectionEl = ref<HTMLElement | null>(null)
-const pinEl = ref<HTMLElement | null>(null)
-let ctx: gsap.Context | null = null
-
-onMounted(() => {
-  const still = prefersReducedMotion() || isSnap()
-  if (still) return
-  sectionEl.value?.classList.add('scrub')
-
-  ctx = gsap.context((self) => {
-    const lines = self.selector!('.line')
-    gsap.set(lines, { opacity: 0, y: 26 })
-
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionEl.value!,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: true,
-      },
+import { useScrollScene } from '../composables/useScrollScene'
+const root = ref<HTMLElement | null>(null)
+useScrollScene(root, () => {
+    gsap.fromTo('.line', { y: 12, opacity: .65 }, {
+      y: 0, opacity: 1, stagger: .12, ease: 'none',
+      scrollTrigger: { trigger: root.value, start: 'top 95%', end: 'top 55%', scrub: true },
     })
-      // 三行文案顺次揭示（滚动可逆）
-      .to(lines[0], { opacity: 1, y: 0, ease: 'none' }, 0.05)
-      .to(lines[1], { opacity: 1, y: 0, ease: 'none' }, 0.35)
-      .to(lines[2], { opacity: 1, y: 0, ease: 'none' }, 0.65)
-      // 背景随“发芽”渐渐染上一丝嫩芽绿
-      .to(pinEl.value!, { backgroundColor: 'rgba(63,143,74,0.06)', ease: 'none' }, 0)
-  }, sectionEl.value!)
+    gsap.fromTo('.stem', { scaleY: .35 }, { scaleY: 1, ease: 'none',
+      scrollTrigger: { trigger: root.value, start: 'top 95%', end: 'bottom 55%', scrub: true } })
 })
-
-onUnmounted(() => ctx?.revert())
 </script>
-
 <template>
-  <section class="manifesto" ref="sectionEl">
-    <div class="pin" ref="pinEl">
-      <p class="line line1">01bit 的数据，承载精神的<em>永恒</em></p>
-      <p class="line line2">白色土豆，将在<em>赛博梦境</em>中</p>
-      <p class="line line3">生根 · 发芽 <span class="sprout">🌱</span></p>
+  <section class="manifesto" ref="root" aria-label="关于这份作品集">
+    <span class="annotation">A SMALL ARCHIVE<br />OF LASTING MOMENTS</span>
+    <div class="poem">
+      <p class="line">01bit 的数据，承载精神的<em>永恒。</em></p>
+      <p class="line">白色土豆将在赛博梦境中，<em>生根发芽。</em></p>
     </div>
+    <span class="stem" aria-hidden="true"></span>
   </section>
 </template>
-
 <style scoped>
-.manifesto { position: relative; }
-/* 动画模式下拉长滚动行程并钉住 */
-.manifesto.scrub { height: 280vh; }
-
-.pin {
-  position: sticky;
-  top: 0;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(10px, 2.4vh, 26px);
-  padding: 10vh 24px;
-  text-align: center;
-}
-/* 非动画模式：正常流、内容可见、紧凑 */
-.manifesto:not(.scrub) .pin { position: static; min-height: auto; padding: 14vh 24px; }
-
-.line {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: clamp(1.4rem, 4.4vw, 2.8rem);
-  line-height: 1.5;
-  color: var(--ink);
-  letter-spacing: 0.02em;
-}
-.line em { font-style: italic; color: var(--brown-deep); }
-.line3 { font-family: var(--sans); font-weight: 500; letter-spacing: 0.1em; }
-.line3 .sprout { color: var(--green); }
+.manifesto { max-width: 1200px; margin: auto; padding: 38px 24px; display: grid; grid-template-columns: 1fr 3fr 24px; align-items: center; gap: 24px; }
+.annotation { font: 10px/1.8 var(--sans); letter-spacing: .12em; color: var(--muted); }
+.poem { font-family: var(--serif); font-size: clamp(15px, 2vw, 24px); line-height: 1.9; }
+.line { margin: 0; }
+em { color: var(--green-deep); font-style: normal; }
+.stem { width: 1px; height: 64px; background: var(--green); transform-origin: bottom; }
+@media(max-width: 650px) { .manifesto { grid-template-columns: 1fr 12px; padding-block: 28px; gap: 12px; } .annotation { display: none; } }
 </style>

@@ -1,4 +1,7 @@
 import { createApp } from 'vue'
+import '@fontsource/tinos/latin-400.css'
+import '@fontsource-variable/noto-serif-sc'
+import '@fontsource-variable/noto-sans-sc'
 import './style.css'
 import App from './App.vue'
 

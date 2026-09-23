@@ -2,112 +2,85 @@
 import { ref, watch, onUnmounted } from 'vue'
 import type { Video } from '../data/videos'
 import { fmtDuration } from '../data/videos'
-
 const props = defineProps<{ open: boolean; video: Video | null }>()
-const emit = defineEmits<{ (e: 'close'): void; (e: 'prev'): void; (e: 'next'): void }>()
-
+const emit = defineEmits<{ close: []; prev: []; next: [] }>()
+const dialog = ref<HTMLDialogElement | null>(null)
 const videoEl = ref<HTMLVideoElement | null>(null)
-
-function onKey(e: KeyboardEvent) {
-  if (!props.open) return
-  if (e.key === 'Escape') emit('close')
-  else if (e.key === 'ArrowLeft') emit('prev')
-  else if (e.key === 'ArrowRight') emit('next')
+const closeButton = ref<HTMLButtonElement | null>(null)
+const failed = ref(false)
+let opener: HTMLElement | null = null
+let previousOverflow = ''
+let locked = false
+function unlock() {
+  if (!locked) return
+  document.body.style.overflow = previousOverflow
+  locked = false
+  if (opener?.isConnected) opener.focus({ preventScroll: true })
 }
-
-watch(
-  () => props.open,
-  (open) => {
-    if (open) {
-      document.body.style.overflow = 'hidden'
-      window.addEventListener('keydown', onKey)
-    } else {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', onKey)
-      videoEl.value?.pause()
-    }
-  },
-)
-
-// 切换视频源时自动播放
-watch(
-  () => props.video?.src,
-  (src) => {
-    if (src && videoEl.value) {
-      videoEl.value.currentTime = 0
-      const p = videoEl.value.play()
-      if (p && (p as Promise<void>).catch) (p as Promise<void>).catch(() => {})
-    }
-  },
-)
-
-function onBackdrop(e: MouseEvent) {
-  if (e.target === e.currentTarget) emit('close')
+watch(() => props.open, (open) => {
+  if (open) {
+    opener = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    previousOverflow = document.body.style.overflow
+    locked = true
+    document.body.style.overflow = 'hidden'
+    dialog.value?.showModal()
+    closeButton.value?.focus()
+  } else {
+    videoEl.value?.pause()
+    dialog.value?.close()
+    unlock()
+  }
+}, { flush: 'post' })
+watch(() => [props.open, props.video?.src] as const, ([open, src]) => {
+  failed.value = false
+  if (!open || !src || !videoEl.value) return
+  videoEl.value.load()
+  void videoEl.value.play().catch(() => { /* Native play control remains available. */ })
+}, { flush: 'post' })
+function onKey(event: KeyboardEvent) {
+  // Native media controls keep arrow keys for seeking and volume.
+  if (event.target === videoEl.value || event.altKey || event.ctrlKey || event.metaKey) return
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    event.preventDefault()
+    if (event.key === 'ArrowLeft') emit('prev')
+    else emit('next')
+  }
 }
-
-onUnmounted(() => {
-  document.body.style.overflow = ''
-  window.removeEventListener('keydown', onKey)
-})
+onUnmounted(() => { videoEl.value?.pause(); dialog.value?.close(); unlock() })
 </script>
-
 <template>
   <Teleport to="body">
-    <div
-      v-if="open"
-      class="lightbox open"
-      role="dialog"
-      aria-modal="true"
-      aria-label="视频播放器"
-      @click="onBackdrop"
-    >
-      <button class="lb-btn lb-close" aria-label="关闭" @click="emit('close')">&times;</button>
-      <button class="lb-btn lb-prev" aria-label="上一个" @click="emit('prev')">&#8249;</button>
-      <button class="lb-btn lb-next" aria-label="下一个" @click="emit('next')">&#8250;</button>
-      <div class="lb-stage">
-        <video ref="videoEl" class="lb-video" :src="video?.src" controls playsinline preload="metadata"></video>
-        <div class="lb-caption">
-          <span class="lb-title">{{ video ? video.title + '  ·  ' + fmtDuration(video.duration) : '' }}</span>
-        </div>
+    <dialog ref="dialog" class="lightbox" aria-label="视频播放器"
+      @cancel.prevent="emit('close')" @keydown="onKey"
+      @click="($event.target === $event.currentTarget) && emit('close')">
+      <div class="player-shell" v-if="open">
+        <header class="player-header">
+          <span>WHITE POTATO · 作品放映</span>
+          <button ref="closeButton" type="button" aria-label="关闭播放器" @click="emit('close')">关闭 ×</button>
+        </header>
+        <video ref="videoEl" :src="video?.src" controls playsinline preload="metadata" @error="failed = true"></video>
+        <p v-if="failed" class="load-error">暂时无法加载视频。<a :href="video?.src" target="_blank" rel="noopener">打开原视频重试 ↗</a></p>
+        <footer class="player-footer">
+          <button type="button" aria-label="上一个视频" @click="emit('prev')">← 上一个</button>
+          <p aria-live="polite">{{ video?.title }}<span v-if="video"> · {{ fmtDuration(video.duration) }}</span></p>
+          <button type="button" aria-label="下一个视频" @click="emit('next')">下一个 →</button>
+        </footer>
       </div>
-    </div>
+    </dialog>
   </Teleport>
 </template>
-
 <style scoped>
-.lightbox {
-  position: fixed; inset: 0; z-index: 50;
-  display: grid; place-items: center;
-  padding: 4vh 4vw;
-  background: rgba(12, 10, 9, 0.86);
-  backdrop-filter: blur(6px);
-}
-.lb-stage { width: min(1000px, 100%); }
-.lb-video {
-  width: 100%; max-height: 78svh;
-  background: #000; border-radius: 10px;
-  box-shadow: 0 24px 70px rgba(0,0,0,.5); display: block;
-}
-.lb-caption {
-  text-align: center; color: #f0ece6; margin-top: 14px;
-  font-family: var(--serif); letter-spacing: 0.08em;
-}
-.lb-caption .lb-title { font-size: 1.02rem; }
-.lb-btn {
-  position: absolute;
-  background: rgba(255,255,255,0.10); color: #fff;
-  border: 1px solid rgba(255,255,255,0.22);
-  cursor: pointer; border-radius: 50%;
-  transition: background .2s, transform .2s;
-  display: grid; place-items: center; line-height: 1;
-}
-.lb-btn:hover { background: rgba(255,255,255,0.22); }
-.lb-close { top: 18px; right: 18px; width: 44px; height: 44px; font-size: 26px; }
-.lb-prev, .lb-next { top: 50%; transform: translateY(-50%); width: 52px; height: 52px; font-size: 30px; }
-.lb-prev { left: max(12px, 2vw); }
-.lb-next { right: max(12px, 2vw); }
-.lb-prev:hover, .lb-next:hover { transform: translateY(-50%) scale(1.08); }
-@media (max-width: 560px) {
-  .lb-prev, .lb-next { width: 42px; height: 42px; font-size: 24px; }
-}
+.lightbox { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; border: 0; padding: 24px; background: transparent; color: #f5f5ef; }
+.lightbox[open] { display: grid; place-items: center; }
+.lightbox::backdrop { background: #111711ef; backdrop-filter: blur(8px); }
+.player-shell { width: min(1040px, 100%); min-width: 0; }
+.player-header, .player-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.player-header { margin-bottom: 16px; font-size: 12px; letter-spacing: .04em; }
+video { width: 100%; max-height: 72svh; display: block; background: #000; }
+button { color: inherit; background: transparent; border: 1px solid #ffffff40; padding: 10px 14px; cursor: pointer; border-radius: 3px; white-space: nowrap; }
+button:hover { background: #ffffff15; }
+.player-footer { margin-top: 16px; font-size: 13px; }
+.player-footer p { font-family: var(--serif); text-align: center; overflow-wrap: anywhere; }
+.load-error { text-align: center; font-size: 14px; }
+@media (max-width: 560px) { .lightbox { padding: 12px; } .player-footer { flex-wrap: wrap; } .player-footer p { order: -1; width: 100%; margin: 0 0 8px; } video { max-height: 60svh; } }
 </style>

@@ -7,7 +7,7 @@ const emit = defineEmits<{ (e: 'play'): void }>()
 </script>
 
 <template>
-  <button class="card" type="button" role="listitem" :aria-label="`播放 ${video.title}`" @click="emit('play')">
+  <button class="card" type="button" :aria-label="`播放 ${video.title}`" @click="emit('play')">
     <div class="thumb">
       <img :src="video.cover" :alt="`${video.title} 封面`" loading="lazy" decoding="async" />
       <span class="play" aria-hidden="true">
@@ -27,7 +27,8 @@ const emit = defineEmits<{ (e: 'play'): void }>()
   appearance: none;
   border: 1px solid var(--line);
   background: var(--paper);
-  border-radius: 14px;
+  border-radius: 3px;
+  width: 100%;
   padding: 0;
   cursor: pointer;
   text-align: left;
@@ -87,7 +88,7 @@ const emit = defineEmits<{ (e: 'play'): void }>()
   gap: 10px; padding: 13px 15px 15px;
 }
 .meta .title {
-  font-weight: 500; font-size: 0.98rem; color: var(--ink);
+  font-family: var(--serif); font-weight: 400; font-size: 1.05rem; color: var(--ink);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .meta .badge {

@@ -18,12 +18,13 @@ interface VideosFile {
 const data = raw as VideosFile
 
 export const videos: Video[] = data.videos
-export const videoCount: number = data.count ?? data.videos.length
+export const videoCount = videos.length
 
 /** 秒 → m:ss */
 export function fmtDuration(sec: number | null): string {
-  if (!sec || typeof sec !== 'number') return ''
-  const m = Math.floor(sec / 60)
-  const s = Math.round(sec % 60)
+  if (sec === null || !Number.isFinite(sec) || sec < 0) return ''
+  const total = Math.round(sec)
+  const m = Math.floor(total / 60)
+  const s = total % 60
   return `${m}:${String(s).padStart(2, '0')}`
 }

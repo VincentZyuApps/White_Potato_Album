@@ -1,5 +1,22 @@
-# Vue 3 + TypeScript + Vite
+# WHITE POTATO · 精选作品集
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Vue 3 + TypeScript + Vite + GSAP。原生滚动驱动可逆的头像视差、文案与卡片动画，没有固定多屏的空白滚动段。文字始终可读，支持系统减少动效设置和 `?snap` 静态模式。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 本地开发
+
+在此目录执行 `npm ci`、`npm run dev`，访问 http://localhost:60606/。端口占用时直接报错，不自动切换端口。`npm run build` 执行类型检查并生成 `dist/`；`npm run preview` 预览构建产物（需先停止 dev，二者共用端口）。
+
+## 资源与字体
+
+- 原头像使用仓库根目录 `potato_pfp.jpg`，由 Vite 打包；所有标题都是可选中的文本。
+- 品牌名使用 `computer-modern` 的 CMU Serif，接近 Manim 默认 TeX 风格；英文正文使用 `@fontsource/tinos`。
+- 中文文案使用 `@fontsource-variable/noto-serif-sc`，界面与粗体作品集标题使用 `@fontsource-variable/noto-sans-sc`。这些是开源近似方案，不声称已经识别出视频全部原字体。
+- 字体随站点自托管，使用 `font-display: swap`；中文分片由 `unicode-range` 按需请求。字体文件采用 OFL，computer-modern 包封装代码采用 MIT；许可证见各 npm 包。
+- 视频唯一编辑源为 `src/data/videos.json`；封面位于 `public/assets/covers/`。视频文件使用 GitHub Release 直链，不复制进站点。
+
+## 验收与部署
+
+- 检查桌面、手机宽度下的首屏、画廊和播放器，无横向溢出；向下和向上滚动均应平滑可逆。
+- 点击卡片打开原生模态播放器；支持关闭、Escape、前后视频，关闭后焦点回到原卡片。播放器原生控件保留方向键快进等行为。
+- 检查减少动效与 `?snap` 下全部内容可读，字体加载后滚动触发位置自动刷新。
+- GitHub Pages 工作流构建 `web/dist`，Vite 使用相对路径适配仓库子路径；旧 `page/` 已删除。

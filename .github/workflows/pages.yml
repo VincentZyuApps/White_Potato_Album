@@ -1,11 +1,12 @@
 name: Deploy GitHub Pages
 
-# 把 page/ 目录发布到 GitHub Pages
+# 构建 Vue 作品集并发布到 GitHub Pages
 on:
   push:
     branches: [main]
     paths:
-      - "page/**"
+      - "web/**"
+      - "potato_pfp.jpg"
       - ".github/workflows/pages.yml"
   workflow_dispatch: {}
 
@@ -32,10 +33,20 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact (page/)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+        working-directory: web
+      - run: npm run build
+        working-directory: web
+
+      - name: Upload built site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: page
+          path: web/dist
 
       - name: Deploy to GitHub Pages
         id: deployment

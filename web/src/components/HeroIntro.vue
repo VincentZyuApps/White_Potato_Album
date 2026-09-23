@@ -55,7 +55,7 @@ useScrollScene(root, () => {
 .portrait { position: absolute; left: 50%; top: 36%; width: min(88vw, 80svh, 720px); height: auto; transform: translate(-50%, -50%) scale(.42); }
 .scroll-scene .portrait { top: 50%; will-change: transform; }
 .hero-title { position: absolute; top: 12%; left: 0; width: 100%; margin: 0; padding: 0 20px; font: 400 clamp(28px, 6.5vw, 76px)/1.1 var(--brand); letter-spacing: -.035em; z-index: 1; }
-.subtitle { position: absolute; top: 57%; left: 0; width: 100%; margin: 0; font: 800 clamp(26px, 4.4vw, 52px)/1.3 var(--sans); letter-spacing: .3em; text-indent: .3em; }
+.subtitle { position: absolute; top: 57%; left: 0; width: 100%; margin: 0; font: 400 oblique clamp(26px, 4.4vw, 52px)/1.3 var(--display-cn); letter-spacing: .3em; text-indent: .3em; }
 .hero-bottom { position: absolute; top: 70%; left: 0; width: 100%; padding: 0 24px; }
 .hero-bottom p { font: 16px/1.8 var(--serif); color: var(--ink-soft); margin: 0 0 18px; }
 .hero-bottom a { display: inline-block; padding: 10px 4px; border-bottom: 1px solid var(--line); font-size: 13px; text-decoration: none; }

@@ -3,6 +3,12 @@
   src: url('computer-modern/fonts/cmu-serif-500-roman.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
 }
+@font-face {
+  font-family: 'Smiley Sans';
+  src: url('@fontpkg/smiley-sans/SmileySans-Oblique.ttf.woff2') format('woff2');
+  font-weight: 400; font-style: oblique;
+  font-display: swap;
+}
 :root {
   --paper: #fff; --ink: #242523; --ink-soft: #676961; --muted: #8b8d83;
   --line: #e3e5dc; --brown: #a38a7c; --brown-deep: #806b5e;
@@ -10,6 +16,7 @@
   --brand: 'CMU Serif', 'Tinos', serif;
   --serif: 'Tinos', 'Noto Serif SC Variable', serif;
   --sans: 'Noto Sans SC Variable', sans-serif;
+  --display-cn: 'Smiley Sans', 'Noto Sans SC Variable', sans-serif;
   --maxw: 1200px; --shadow: none; --shadow-hover: 0 12px 30px #20302012;
   color: var(--ink); background: var(--paper); font-family: var(--sans);
   font-synthesis: none; -webkit-font-smoothing: antialiased;

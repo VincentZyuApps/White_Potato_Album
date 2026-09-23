@@ -84,7 +84,7 @@ const emit = defineEmits<{ (e: 'play'): void }>()
   gap: 9px; padding: 14px 15px 15px;
 }
 .meta .title {
-  font-family: var(--serif); font-weight: 500; font-size: 1.05rem; line-height: 1.45; color: var(--ink);
+  font-family: var(--display-cn); font-weight: 400; font-style: oblique; font-size: 1.05rem; line-height: 1.45; color: var(--ink);
   display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
 }
 .archive-meta {

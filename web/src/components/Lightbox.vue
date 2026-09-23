@@ -62,7 +62,10 @@ onUnmounted(() => { videoEl.value?.pause(); dialog.value?.close(); unlock() })
         <p v-if="failed" class="load-error">暂时无法加载视频。<a :href="video?.src" target="_blank" rel="noopener">打开原视频重试 ↗</a></p>
         <footer class="player-footer">
           <button type="button" aria-label="上一个视频" @click="emit('prev')">← 上一个</button>
-          <p aria-live="polite">{{ video?.title }}<span v-if="video"> · {{ video.id.toUpperCase() }} · {{ fmtDuration(video.duration) }}</span></p>
+          <p aria-live="polite">
+            <span class="player-title">{{ video?.title }}</span>
+            <span v-if="video" class="player-archive"> · {{ video.id.toUpperCase() }} · {{ fmtDuration(video.duration) }}</span>
+          </p>
           <button type="button" aria-label="下一个视频" @click="emit('next')">下一个 →</button>
         </footer>
       </div>
@@ -80,7 +83,9 @@ video { width: 100%; max-height: 72svh; display: block; background: #000; }
 button { color: inherit; background: transparent; border: 1px solid #ffffff40; padding: 10px 14px; cursor: pointer; border-radius: 3px; white-space: nowrap; }
 button:hover { background: #ffffff15; }
 .player-footer { margin-top: 16px; font-size: 13px; }
-.player-footer p { font-family: var(--serif); text-align: center; overflow-wrap: anywhere; }
+.player-footer p { text-align: center; overflow-wrap: anywhere; }
+.player-title { font-family: var(--display-cn); font-style: oblique; }
+.player-archive { font-family: var(--brand); font-size: .88em; letter-spacing: .06em; color: #d7d7cf; }
 .load-error { text-align: center; font-size: 14px; }
 @media (max-width: 560px) { .lightbox { padding: 12px; } .player-footer { flex-wrap: wrap; } .player-footer p { order: -1; width: 100%; margin: 0 0 8px; } video { max-height: 60svh; } }
 </style>

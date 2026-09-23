@@ -8,6 +8,10 @@ const dialog = ref<HTMLDialogElement | null>(null)
 const videoEl = ref<HTMLVideoElement | null>(null)
 const closeButton = ref<HTMLButtonElement | null>(null)
 const failed = ref(false)
+let volume = 0.5
+function rememberVolume(event: Event) {
+  volume = (event.currentTarget as HTMLVideoElement).volume
+}
 let opener: HTMLElement | null = null
 let previousOverflow = ''
 let locked = false
@@ -34,6 +38,7 @@ watch(() => props.open, (open) => {
 watch(() => [props.open, props.video?.src] as const, ([open, src]) => {
   failed.value = false
   if (!open || !src || !videoEl.value) return
+  videoEl.value.volume = volume
   videoEl.value.load()
   void videoEl.value.play().catch(() => { /* Native play control remains available. */ })
 }, { flush: 'post' })
@@ -58,7 +63,7 @@ onUnmounted(() => { videoEl.value?.pause(); dialog.value?.close(); unlock() })
           <span>WHITE POTATO · 作品放映</span>
           <button ref="closeButton" type="button" aria-label="关闭播放器" @click="emit('close')">关闭 ×</button>
         </header>
-        <video ref="videoEl" :src="video?.src" controls playsinline preload="metadata" @error="failed = true"></video>
+        <video ref="videoEl" :src="video?.src" controls playsinline preload="metadata" @volumechange="rememberVolume" @error="failed = true"></video>
         <p v-if="failed" class="load-error">暂时无法加载视频。<a :href="video?.src" target="_blank" rel="noopener">打开原视频重试 ↗</a></p>
         <footer class="player-footer">
           <button type="button" aria-label="上一个视频" @click="emit('prev')">← 上一个</button>

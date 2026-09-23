@@ -7,17 +7,19 @@ const emit = defineEmits<{ (e: 'play'): void }>()
 </script>
 
 <template>
-  <button class="card" type="button" :aria-label="`播放 ${video.title}`" @click="emit('play')">
+  <button class="card" type="button" :aria-label="`播放 ${video.title}，${video.id.toUpperCase()}`" @click="emit('play')">
     <div class="thumb">
       <img :src="video.cover" :alt="`${video.title} 封面`" loading="lazy" decoding="async" />
       <span class="play" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
       </span>
-      <span v-if="fmtDuration(video.duration)" class="dur">{{ fmtDuration(video.duration) }}</span>
     </div>
     <div class="meta">
       <span class="title">{{ video.title }}</span>
-      <span class="badge">AV</span>
+      <span class="archive-meta">
+        <span class="archive-id">{{ video.id.toUpperCase() }}</span>
+        <span v-if="fmtDuration(video.duration)">{{ fmtDuration(video.duration) }}</span>
+      </span>
     </div>
   </button>
 </template>
@@ -77,30 +79,24 @@ const emit = defineEmits<{ (e: 'play'): void }>()
 }
 .play svg { width: 22px; height: 22px; margin-left: 3px; }
 .card:hover .play, .card:focus-visible .play { transform: scale(1); opacity: 1; }
-.dur {
-  position: absolute; right: 8px; bottom: 8px; z-index: 2;
-  font-size: 0.72rem; padding: 2px 7px; border-radius: 6px;
-  background: rgba(0,0,0,0.66); color: #fff;
-  letter-spacing: 0.02em; font-variant-numeric: tabular-nums;
-}
 .meta {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 10px; padding: 13px 15px 15px;
+  display: flex; min-height: 98px; flex-direction: column; align-items: flex-start;
+  gap: 9px; padding: 14px 15px 15px;
 }
 .meta .title {
-  font-family: var(--serif); font-weight: 400; font-size: 1.05rem; color: var(--ink);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: var(--serif); font-weight: 500; font-size: 1.05rem; line-height: 1.45; color: var(--ink);
+  display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
 }
-.meta .badge {
-  flex: none;
-  font-family: var(--serif); font-size: 0.72rem; letter-spacing: 0.08em;
-  color: var(--brown-deep);
-  border: 1px solid var(--brown); border-radius: 999px;
-  padding: 1px 9px; background: rgba(169,120,79,0.06);
+.archive-meta {
+  display: flex; align-items: baseline; gap: 9px; margin-top: auto;
+  font-family: var(--brand); font-size: 0.74rem; letter-spacing: 0.08em;
+  color: var(--brown-deep); font-variant-numeric: tabular-nums;
 }
+.archive-meta span + span { color: var(--muted); }
+.archive-id { font-weight: 600; }
 @media (max-width: 560px) {
-  .meta { padding: 10px 11px 12px; }
-  .meta .title { font-size: 0.88rem; }
+  .meta { min-height: 92px; padding: 10px 11px 12px; }
+  .meta .title { font-size: 0.94rem; }
   .play { width: 48px; height: 48px; }
 }
 </style>

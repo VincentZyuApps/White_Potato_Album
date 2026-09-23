@@ -62,7 +62,7 @@ onUnmounted(() => { videoEl.value?.pause(); dialog.value?.close(); unlock() })
         <p v-if="failed" class="load-error">暂时无法加载视频。<a :href="video?.src" target="_blank" rel="noopener">打开原视频重试 ↗</a></p>
         <footer class="player-footer">
           <button type="button" aria-label="上一个视频" @click="emit('prev')">← 上一个</button>
-          <p aria-live="polite">{{ video?.title }}<span v-if="video"> · {{ fmtDuration(video.duration) }}</span></p>
+          <p aria-live="polite">{{ video?.title }}<span v-if="video"> · {{ video.id.toUpperCase() }} · {{ fmtDuration(video.duration) }}</span></p>
           <button type="button" aria-label="下一个视频" @click="emit('next')">下一个 →</button>
         </footer>
       </div>

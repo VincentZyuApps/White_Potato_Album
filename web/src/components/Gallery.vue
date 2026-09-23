@@ -36,7 +36,7 @@ useScrollScene(galleryEl, () => {
 <template>
   <section id="gallery" ref="galleryEl">
     <h2 class="section-head"><span>—— 作品精选 ——</span></h2>
-    <p class="section-sub">共 <span>{{ videoCount }}</span> 部 · 点击封面即可播放</p>
+    <p class="section-sub">本精选作品集共收录 <span>{{ videoCount }}</span> 部作品 · 点击封面即可播放</p>
     <div class="grid" role="list">
       <div v-for="(v, i) in videos" :key="v.id" class="card-entry" role="listitem">
         <VideoCard :video="v" @play="openAt(i)" />

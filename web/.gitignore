@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# 原始演示录屏；保留 GIF 供 README 展示
+/docs/videos/screenrecord/web.mp4
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

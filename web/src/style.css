@@ -21,7 +21,7 @@ button { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 2px solid var(--green); outline-offset: 5px; }
 ::selection { background: #dde8d7; color: #243321; }
-.site-nav { max-width: 1200px; margin: auto; padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+.site-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 3; max-width: 1200px; margin: auto; padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .site-nav a { text-decoration: none; }
 .wordmark { font-family: var(--brand); letter-spacing: .03em; }
 .wordmark span { font: 10px var(--sans); margin-left: 15px; color: var(--muted); }

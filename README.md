@@ -1,3 +1,5 @@
+[🌐 查看网页项目说明与效果演示](web/README.md)
+
 ![potato_bili_cover.png](potato_bili_cover.png)
 
 # 🥔 White_Potato_Album

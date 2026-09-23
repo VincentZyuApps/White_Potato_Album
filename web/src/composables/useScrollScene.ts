@@ -6,7 +6,7 @@ import { isSnap } from './useReducedMotion'
 gsap.registerPlugin(ScrollTrigger)
 
 /** Each scene owns its animations; media changes and HMR revert them safely. */
-export function useScrollScene(root: Ref<HTMLElement | null>, setup: () => void) {
+export function useScrollScene(root: Ref<HTMLElement | null>, setup: () => void | (() => void)) {
   let media: gsap.MatchMedia | undefined
   let disposed = false
   onMounted(() => {
